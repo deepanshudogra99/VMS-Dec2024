@@ -45,8 +45,8 @@ class LoginController extends Controller
   public function showLoginForm()
   {
     // Generate two random numbers for the sum
-    $num1 = rand(10, 99);
-    $num2 = rand(10, 99);
+    $num1 = rand(0, 9);
+    $num2 = rand(0, 9);
 
     // Store the sum in the session to validate later
     session(['captcha_answer' => $num1 + $num2]);

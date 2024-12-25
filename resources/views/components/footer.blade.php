@@ -1,5 +1,5 @@
-<footer class="footer  p-2">
-    <div class="container d-flex align-items-center justify-content-center">
+<footer class="footer p-2">
+    <div class="container d-flex align-items-center justify-content-center" style="background-color: teal;">
         <!-- Logos -->
         <img src="{{asset('images/nic-logo.svg')}}" alt="NIC Logo" class="nic-logo-footer me-3">
         <img src="{{asset('images/digital-india.png')}}" alt="Digital India Logo" class="digital-india-logo me-3 p-2">

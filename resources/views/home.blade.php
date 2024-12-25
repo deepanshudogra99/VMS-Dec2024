@@ -1,9 +1,4 @@
-
-
 @extends('layouts.app')
-
- @section('content')
+@section('content')
     @include('navigation-menu')
-    
-
 @endsection
