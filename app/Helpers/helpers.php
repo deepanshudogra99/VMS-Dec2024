@@ -2,6 +2,7 @@
 use App\Models\State;
 use App\Models\District;
 use App\Models\Office;
+use App\Models\UserType;
 
 
 function getstate($statecode)
@@ -22,11 +23,11 @@ function getoffice($officecode)
   return $officename[0];
 }
 
-// function getusertype($usertypecode)
-// {
-//   $officename = Office::where('usertypecode', $usertypecode)->pluck('officename');
-//   return $officename[0];
-// }
+function getusertype($usertypecode)
+{
+  $usertypename = UserType::where('usertypecode', $usertypecode)->pluck('usertypename');
+  return $usertypename[0];
+}
 
 
 

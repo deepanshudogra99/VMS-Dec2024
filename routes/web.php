@@ -4,6 +4,7 @@ use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function () {

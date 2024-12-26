@@ -21,7 +21,7 @@
       <tr class="text-center">
       <td>{{getdist($u->districtcode)}}</td>
       <td>{{getoffice($u->officecode)}}</td>
-      <td>{{$u->usertypecode}}</td>
+      <td>{{getusertype($u->usertypecode)}}</td>
       <td>{{$u->name}}</td>
       <td>{{$u->email}}</td>
       <td>
