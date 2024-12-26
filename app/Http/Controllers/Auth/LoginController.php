@@ -66,7 +66,7 @@ class LoginController extends Controller
 
     // Attempt to log in the user
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-      return redirect()->route('home'); // Redirect after successful login
+      return redirect()->route('usermanagement'); // Redirect after successful login
     }
 
     // If authentication fails, return back with errors
