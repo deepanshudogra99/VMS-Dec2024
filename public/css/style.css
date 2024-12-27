@@ -58,9 +58,9 @@
 .login-card h2 {
     color: #f57c00; /* Bright color for the title */
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     margin-bottom: 15px;
-    font-weight: bold;
+
     text-transform: uppercase; /* Uppercase styling for emphasis */
     letter-spacing: 1px; /* Adds spacing between letters */
 }
@@ -81,7 +81,17 @@
 .login-title {
     color: #f57c00;
     font-size: 1.5rem;
+    /* font-weight: bold; */
+}
+.btn-custom {
+    background-color: #f57c00;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px; /* More rounded button */
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 .btn-custom {
     background-color: #f57c00;

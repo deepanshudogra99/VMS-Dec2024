@@ -9,9 +9,12 @@ use App\Models\State;
 use App\Models\District;
 use App\Models\Office;
 use App\Models\UserType;
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
+
 
 class RegisterController extends Controller
 {
@@ -54,9 +57,24 @@ class RegisterController extends Controller
   protected function validator(array $data)
   {
     return Validator::make($data, [
+      'statecode' => ['required'],
+      'districtcode' => ['required'],
+      'officecode' => ['required'],
+      'usertypecode' => ['required'],
       'name' => ['required', 'string', 'max:255'],
-      'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+      'email' => ['required', 'email', 'unique:users,email', 'max:255'],
       'password' => ['required', 'string', 'min:8', 'confirmed'],
+    ], [
+      'statecode.required' => 'State Name is Required!',
+      'districtcode.required' => 'District Name is Required!',
+      'officecode.required' => 'Office Name is Required!',
+      'usertypecode.required' => 'User Type is Required!',
+      'name.required' => 'User Name is Required!',
+      'email.required' => 'User Email is Required!',
+      'email.email' => 'Enter Correct Email Address!',
+      'password.required' => 'Password is Required!',
+      'password.min' => 'Password Should be Minimum 8 Characters!',
+      'password.confirmed' => 'Password and Confirm Password Do Not Match!'
     ]);
   }
 
@@ -77,16 +95,80 @@ class RegisterController extends Controller
     ]);
   }
 
+
+
+  public function getDistricts(Request $request)
+  {
+    //dd($request);
+    $data['districts'] = District::where('statecode', $request->state_id)->get(['districtcode', 'districtname']);
+    return response()->json($data);
+  }
+
   public function showRegistrationForm()
   {
-    $states = State::all();
-    $districts = District::all();
-    $offices = Office::all();
-    $userTypes = UserType::all();
+    $states = State::all(['statecode', 'statename']);
+    $districts = District::all(['districtcode', 'districtname']);
+    $offices = Office::all(['officecode', 'officename']);
+    $userTypes = UserType::all(['usertypecode', 'usertypename']);
 
-    //dd($states);
+    return view('auth.register', compact('states', 'districts', 'offices', 'userTypes'))
+      ->with('success', 'User Registered Successfully');
+  }
 
-    return view('auth.register', compact('states', 'districts', 'offices', 'userTypes'));
+  public function register(Request $request)
+  {
+    $states = State::all(['statecode', 'statename']);
+    $districts = District::all(['districtcode', 'districtname']);
+    $offices = Office::all(['officecode', 'officename']);
+    $userTypes = UserType::all(['usertypecode', 'usertypename']);
+    //dd($request->name);
+    $request->validate([
+      'statecode' => 'required',
+      'districtcode' => 'required',
+      'officecode' => 'required',
+      'usertypecode' => 'required',
+      'name' => 'required',
+      'email' => 'required|email|unique:users,email',
+      'password' => 'required|confirmed|min:8',
+    ], [
+      "statecode" => 'State Name is Required !',
+      "districtcode" => 'District Name is Required !',
+      "officecode" => 'Office Name is Required !',
+      "usertypecode" => 'User Type is Required !',
+      "name.required" => 'User Name is Required !',
+      "email.required" => 'User Email is Required !',
+      "email.email" => 'Enter Correct Email Address !',
+      "password.required" => 'Password is Required !',
+      "password.min" => 'Password Should be Minimum 8 Characters !',
+      "password.confirmed" => 'Password and Confirm Password Does Not Match !'
+    ]);
+
+    $user = new User();
+
+    $user->statecode = $request->statecode;
+    $user->districtcode = $request->districtcode;
+    $user->officecode = $request->officecode;
+    $user->usertypecode = $request->usertypecode;
+
+    if ($request->usertypecode == '1') {
+      $user->userrole = '1';
+    } elseif ($request->usertypecode == '2') {
+      $user->userrole = '2';
+    }
+
+    $user->name = strtoupper($request->name);
+    $user->email = $request->email;
+    $user->password = Hash::make($request->password);
+    $user->save();
+
+    $lastUser = User::latest()->first();
+    if ($lastUser) {
+      $lastUser->update(['userid' => 'Usr' . (string) $lastUser->id]);
+    } else {
+      echo "No user records found.";
+    }
+    //return view('auth.register')->with('success', 'User Registered successfully');
+    return view('auth.register', compact('states', 'districts', 'offices', 'userTypes'))->with('success', 'User Registered successfully');
   }
 
 

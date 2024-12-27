@@ -19,11 +19,14 @@
       {{-- <div class="col-md-3">
         <a href="" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm text-white">Login</a>
       </div> --}}
+      <!-- <div class="text-end mt-2">
+        <a class="btn btn-custom" href="/register">Register</a>
+      </div> -->
     </div>
   </div>
-  <div class="text-end mt-2">
+  <!-- <div class="text-end mt-2">
     <a class="btn btn-custom" href="/register">Register</a>
-  </div>
+  </div> -->
 
   <div class="container-fluid login-section mt-2 mb-2">
     <div class="row w-100">
@@ -47,7 +50,12 @@
       <!-- Right Section -->
       <div class="col-md-4">
         <div class="card login-card p-4">
-          <h2 class="login-title mb-4">Log In</h2>
+          <!-- <h2 class="login-title mb-4 p-3 text-white" style="background-color: #008080;">Log In</h2> -->
+          <h2 class="login-title mb-4 p-3 text-white"
+            style="background-color: #008080; border-radius: 50px; text-align: center;">
+            Log In
+          </h2>
+
           <form action="{{ route('login.submit') }}" method="POST" autocomplete="off">
             @csrf
             <div class="mb-3">
@@ -80,6 +88,13 @@
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-custom ">Log In</button>
+              <!-- <a class="btn" style="background-color: #008080;" href="/register">Register</a> -->
+              <!-- <a class="btn btn-custom "
+                style="background-color: #008080; border-radius: 50px; padding: 10px 20px; color: white; text-decoration: none;"
+                href="/register">
+                Register
+              </a> -->
+
             </div>
           </form>
 
