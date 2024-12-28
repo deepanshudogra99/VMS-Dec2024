@@ -55,6 +55,26 @@ class LoginController extends Controller
     return view('welcome', compact('num1', 'num2'));
   }
 
+  // public function login(Request $request)
+  // {
+  //   // Validate the input fields, including the CAPTCHA answer
+  //   $request->validate([
+  //     'email' => 'required|email',
+  //     'password' => 'required',
+  //     'captcha' => 'required|numeric|in:' . session('captcha_answer'),
+  //   ]);
+
+  //   //if()
+  //   if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+  //     return redirect()->route('usermanagement'); // Redirect after successful login
+  //   }
+
+  //   // If authentication fails, return back with errors
+  //   return back()->withErrors([
+  //     'email' => 'These credentials do not match our records.',
+  //   ]);
+  // }
+
   public function login(Request $request)
   {
     // Validate the input fields, including the CAPTCHA answer
@@ -64,9 +84,22 @@ class LoginController extends Controller
       'captcha' => 'required|numeric|in:' . session('captcha_answer'),
     ]);
 
-    // Attempt to log in the user
+    // Attempt to authenticate the user
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-      return redirect()->route('usermanagement'); // Redirect after successful login
+      // Check user role and redirect accordingly
+      $userRole = Auth::user()->userrole;
+
+      switch ($userRole) {
+        case 0: // Super Admin
+          return redirect()->route('usermanagement');
+        case 1: // Office Admin
+          return redirect()->route('officeadmin.dashboard');
+        case 2: // FMS User
+          return redirect()->route('addvc');
+        default: // Unknown Role
+          Auth::logout(); // Optional: Logout if role is invalid
+          return back()->withErrors(['email' => 'Unauthorized access.']);
+      }
     }
 
     // If authentication fails, return back with errors
@@ -74,5 +107,6 @@ class LoginController extends Controller
       'email' => 'These credentials do not match our records.',
     ]);
   }
+
 
 }

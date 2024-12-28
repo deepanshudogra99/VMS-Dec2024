@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\FmsUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -23,6 +24,7 @@ Route::post('/', [LoginController::class, 'login'])->name('login.submit');
 
 Route::middleware(['auth'])->group(function () {
   Route::get('/usermanagement', [SuperAdminController::class, 'usermanagement'])->name('usermanagement');
+  Route::get('/addvc', [FmsUserController::class, 'addvc'])->name('addvc');
 
 
 
