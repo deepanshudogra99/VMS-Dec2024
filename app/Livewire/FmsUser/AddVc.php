@@ -59,7 +59,7 @@ class AddVc extends Component
     $this->reset();
     $this->showModal = false;
 
-    session()->flash('message', 'VC added successfully!');
+    session()->flash('message', 'VC Entered Successfully!');
 
   }
 

@@ -55,7 +55,9 @@
     @if (session()->has('message'))
     <div class="alert alert-success mt-3">
       {{ session('message') }}
+      <!-- <button type="button" class="btn-close" aria-label="Close"></button> -->
     </div>
+
   @endif
   </div>
   <!-- <div class="container bg-primary p-3 rounded-pill">
@@ -93,7 +95,7 @@
           @foreach ($tabledata as $data)
         <tr>
         <td>{{ $data->vcid }}</td>
-        <td>{{ $data->vcdate }}</td>
+        <td>{{parseDate($data->vcdate) }}</td>
         <td>{{ $data->purpose }}</td>
         <td>{{ $data->timein }}</td>
         <td>{{ $data->timeout }}</td>
